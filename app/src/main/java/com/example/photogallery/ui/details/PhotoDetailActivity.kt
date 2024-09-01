@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.photogallery.ui.details.ui.theme.PhotoGalleryTheme
 
@@ -18,18 +20,23 @@ class PhotoDetailActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val itemId = intent.getStringExtra("ITEM_ID") ?: "Нет данных"
+        val itemId = intent.getIntExtra("ITEM_ID", -1)
+        val displayText = if (itemId != -1) itemId.toString() else "Нет данных"
+
         setContent {
-            PhotoGalleryTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting3(
-                        name = itemId,
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            PhotoDetailScreen(itemId)
+
         }
     }
+}
+
+@Composable
+fun PhotoDetailScreen(imageResId: Int) {
+    Image(
+        painter = painterResource(id = imageResId),
+        contentDescription = null,
+        modifier = Modifier.fillMaxSize()
+    )
 }
 
 @Composable
