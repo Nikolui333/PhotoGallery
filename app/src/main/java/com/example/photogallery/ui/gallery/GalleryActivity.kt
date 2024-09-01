@@ -1,5 +1,6 @@
 package com.example.photogallery.ui.gallery
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,6 +26,7 @@ import com.example.photogallery.R
 import com.example.photogallery.ui.details.ui.theme.PhotoGalleryTheme
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.graphics.painter.Painter
@@ -34,6 +36,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.platform.LocalContext
+import com.example.photogallery.ui.details.PhotoDetailActivity
 
 class GalleryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,15 +45,8 @@ class GalleryActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PhotoGalleryTheme {
-/*                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting2(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )*/
-                    //SimpleLazyColumn()
                 MyScreen()
                 }
-            //}
         }
     }
 }
@@ -76,6 +73,22 @@ fun MyScreen() {
         R.drawable.heart,
         R.drawable.man,
         R.drawable.figures,
+        R.drawable.heart,
+        R.drawable.man,
+        R.drawable.figures,
+
+        R.drawable.heart,
+        R.drawable.man,
+        R.drawable.figures,
+
+        R.drawable.heart,
+        R.drawable.man,
+        R.drawable.figures,
+
+        R.drawable.heart,
+        R.drawable.man,
+        R.drawable.figures,
+
         // Добавьте больше изображений по мере необходимости
     )
     SimpleLazyColumn(imageResIds)
@@ -83,7 +96,8 @@ fun MyScreen() {
 
 @Composable
 fun SimpleLazyColumn(imageResIds: List<Int>) {
-    val items = List(100) { "Item #$it" } // Генерация списка из 100 элементов
+
+    val context = LocalContext.current
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(3), // Устанавливаем 3 столбца
@@ -92,7 +106,12 @@ fun SimpleLazyColumn(imageResIds: List<Int>) {
         items(imageResIds) { imageResId ->
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(8.dp).clickable {
+                    val intent = Intent(context, PhotoDetailActivity::class.java).apply {
+                        putExtra("ITEM_ID", imageResId) // Передаем данные
+                    }
+                    context.startActivity(intent)
+                }
             ) {
                 Image(
                     painter = painterResource(id = imageResId),
@@ -102,5 +121,5 @@ fun SimpleLazyColumn(imageResIds: List<Int>) {
             }
         }
    }
-    
+
 }

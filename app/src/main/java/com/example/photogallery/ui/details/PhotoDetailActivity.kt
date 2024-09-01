@@ -17,11 +17,13 @@ class PhotoDetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val itemId = intent.getStringExtra("ITEM_ID") ?: "Нет данных"
         setContent {
             PhotoGalleryTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting3(
-                        name = "Android",
+                        name = itemId,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
