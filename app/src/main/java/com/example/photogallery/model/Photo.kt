@@ -1,4 +1,8 @@
 package com.example.photogallery.model
 
-class Photo {
-}
+data class Photo(
+    val id: String,
+    val title: String,
+    val url: String,
+    val description: String? = null
+)
